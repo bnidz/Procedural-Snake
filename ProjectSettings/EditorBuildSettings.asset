@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Snek 1_AR.unity
+    guid: 2c63b092aabda4c32bc3d0f2a369119a
   m_configObjects: {}

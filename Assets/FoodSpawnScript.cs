@@ -24,7 +24,8 @@ using UnityEngine;
 
     private void Start()
     {
-        InstantiateFood();   
+
+        //InstantiateFood();   
     }
 
     public void InstantiateFood()
