@@ -40,7 +40,8 @@ public class ARTapToPlace : MonoBehaviour
 
     private void PlaceObject()
     {
-        Instantiate(objecToPlace, placementPose.position, placementPose.rotation);
+    GameObject snape = Instantiate(objecToPlace, placementIndicator.transform.position, placementIndicator.transform.rotation);
+        snape.SetActive(true);
         FoodSpawnScript.Instance.InstantiateFood();
     }
 
@@ -52,6 +53,7 @@ public class ARTapToPlace : MonoBehaviour
         raycastMan.Raycast(screenCenter, hits, TrackableType.FeaturePoint); //planes recomended hmm 
 
         placementPoseIsvalid = hits.Count > 0;
+
         if (placementPoseIsvalid)
         {
             placementPose = hits[0].pose;

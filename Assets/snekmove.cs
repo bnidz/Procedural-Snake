@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,22 +7,43 @@ public class snekmove : MonoBehaviour
 {
 
     public List <GameObject> snekparts;
-    public float snekspeed = 1f;
+    public float snekspeed = 10f;
     float snektimer;
 
     //snek add part stuff
     public bool skipRemove = false;
     public GameObject snekpartPrefab;
 
+    public float snekScale = 0.1f;
+
+    public bool generateSnek;
+    public int startingLenght = 8;
+
     // Start is called before the first frame update
     void Start()
     {
-        float snektimer = 1 / snekspeed;
+        float snektimer = snekScale / snekspeed;
+        generateSnek = true;
+    }
+
+    private void snakeInit()
+    {
+        if (snekparts.Count < startingLenght)
+        {
+            AddSnekPart();
+            if (snekparts.Count >= startingLenght)
+                generateSnek = false;
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+            if(generateSnek)
+            {
+            snakeInit();
+            }
+
         SnekMove();
         SnekBase();
     }
@@ -31,7 +53,6 @@ public class snekmove : MonoBehaviour
         {
             AddSnekPart();
         }
-
     }
 
     public void AddSnekPart()
@@ -47,29 +68,33 @@ public class snekmove : MonoBehaviour
         if (snektimer <= 0f && skipRemove)
         {
             GameObject newSnekpart = Instantiate(snekpartPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), gameObject.transform.rotation);
+            newSnekpart.transform.localScale = gameObject.transform.localScale;
+         //  newSnekpart.transform.parent = gameObject.transform;
             newSnekpart.transform.localScale *= 1.4f;
             snekparts.Add(newSnekpart);
 
 
-            snektimer = 1 / snekspeed;
+            snektimer = snekScale / snekspeed;
             skipRemove = false;
             //   return;
         }
         if (snektimer <= 0f && !skipRemove)
         {
             GameObject newSnekpart = Instantiate(snekpartPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), gameObject.transform.rotation);
+            //   newSnekpart.transform.parent = gameObject.transform;
+            newSnekpart.transform.localScale = gameObject.transform.localScale;
             snekparts.Add(newSnekpart);
             //  Destroy(snekparts[snekparts.Count]);
             Destroy(snekparts[0]);
             snekparts.Remove(snekparts[0]);
 
             snekparts[0].transform.localScale *= .6f;
-            snektimer = 1 / snekspeed;
+            snektimer = snekScale / snekspeed;
         }
     }
     public void SnekMove()
     {
-        transform.Translate(transform.forward * snekspeed * Time.fixedDeltaTime, Space.World);
+        gameObject.transform.Translate(transform.forward * snekspeed * Time.fixedDeltaTime, Space.World);
 
         if (Input.GetKey("d"))
         {
