@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class snekmove : MonoBehaviour
 {
@@ -18,6 +21,21 @@ public class snekmove : MonoBehaviour
 
     public bool generateSnek;
     public int startingLenght = 8;
+
+    //UI detection
+    private bool IsPointerOverUIObject()
+    {
+        // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f
+        // the ray cast appears to require only eventData.position.
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        if (results.Count > 0) return results[0].gameObject.tag == "excludeUiTouch"; else return false;
+    }
+
 
     // Start is called before the first frame update
     void Start()

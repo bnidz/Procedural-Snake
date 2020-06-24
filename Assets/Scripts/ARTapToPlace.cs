@@ -5,6 +5,8 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARSubsystems;
 using System;
+using UnityEngine.EventSystems;
+
 
 public class ARTapToPlace : MonoBehaviour
 {
@@ -14,16 +16,30 @@ public class ARTapToPlace : MonoBehaviour
     private Pose placementPose;
     private bool placementPoseIsvalid = false;
 
-    private ARCameraManager arCamMan;
+  //  private ARCameraManager arCamMan;
 
     public GameObject objecToPlace;
+    //UI detection
+    private bool IsPointerOverUIObject()
+    {
+        // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f
+        // the ray cast appears to require only eventData.position.
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        if (results.Count > 0) return results[0].gameObject.tag == "excludeUiTouch"; else return false;
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
         ARorigin = FindObjectOfType<ARSessionOrigin>();
         raycastMan = FindObjectOfType<ARRaycastManager>();
-        arCamMan = FindObjectOfType<ARCameraManager>();
+     //   arCamMan = FindObjectOfType<ARCameraManager>();
     }
 
     // Update is called once per  frame
@@ -32,7 +48,7 @@ public class ARTapToPlace : MonoBehaviour
         UpdatePlacementPose();
         UpdatePlacementIndicator();
 
-        if( placementPoseIsvalid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if(!IsPointerOverUIObject() && placementPoseIsvalid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             PlaceObject();
         }
