@@ -6,6 +6,8 @@ using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 
 public class ARTapToPlace : MonoBehaviour
@@ -15,10 +17,21 @@ public class ARTapToPlace : MonoBehaviour
     private ARSessionOrigin ARorigin;
     private Pose placementPose;
     private bool placementPoseIsvalid = false;
+    private ARPlaneManager planeManager;
+
+
+
+    public SnekControls snekCTRL;
+
+    private String planeName;
+    private GameObject copyPlane;
+
+    //object already in scene
+    public bool snakeInGame = false;
 
   //  private ARCameraManager arCamMan;
 
-    public GameObject objecToPlace;
+    private GameObject SnekHead;
     //UI detection
     private bool IsPointerOverUIObject()
     {
@@ -37,6 +50,8 @@ public class ARTapToPlace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        planeManager = FindObjectOfType<ARPlaneManager>();
+        SnekHead = SnekManager.Instance.snekHed;
         ARorigin = FindObjectOfType<ARSessionOrigin>();
         raycastMan = FindObjectOfType<ARRaycastManager>();
      //   arCamMan = FindObjectOfType<ARCameraManager>();
@@ -45,20 +60,39 @@ public class ARTapToPlace : MonoBehaviour
     // Update is called once per  frame
     void Update()
     {
+
+        if(!snakeInGame)
+        {
         UpdatePlacementPose();
         UpdatePlacementIndicator();
 
-        if(!IsPointerOverUIObject() && placementPoseIsvalid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            PlaceObject();
+            if(!IsPointerOverUIObject() && placementPoseIsvalid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                PlaceObject();
+
+            }
         }
     }
 
     private void PlaceObject()
     {
-    GameObject snape = Instantiate(objecToPlace, placementIndicator.transform.position, placementIndicator.transform.rotation);
+        snakeInGame = true;
+        GameObject snape = Instantiate(SnekHead, placementIndicator.transform.position, placementIndicator.transform.rotation);
+        SnekManager.Instance.snekHed = snape;
+
+      //  copyPlane = GameObject.Find(planeName);
+      //  Instantiate(copyPlane, new Vector3(copyPlane.transform.position.x, copyPlane.transform.position.y -2f, copyPlane.transform.position.x), placementIndicator.transform.rotation);
+        //init right snake to UI controls
+        //  snekCTRL.sm = snape.GetComponent<snekmove>();
         snape.SetActive(true);
-        FoodSpawnScript.Instance.InstantiateFood();
+
+        //foreach (var plane in planeManager.trackables)
+        //{
+        //    plane.gameObject.SetActive(false);
+        //}
+
+        SnekManager.Instance.InstantiateFood();
+        SnekManager.Instance.ShowControls();
     }
 
     private void UpdatePlacementPose()
@@ -66,13 +100,16 @@ public class ARTapToPlace : MonoBehaviour
 
         var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(.5f, .5f));
         var hits = new List<ARRaycastHit>();
-        raycastMan.Raycast(screenCenter, hits, TrackableType.FeaturePoint); //planes recomended hmm 
+        raycastMan.Raycast(screenCenter, hits, TrackableType.Planes); //planes recomended hmm 
 
         placementPoseIsvalid = hits.Count > 0;
 
         if (placementPoseIsvalid)
         {
             placementPose = hits[0].pose;
+           // planeName = hits[0].ToString();
+
+
 
             var cameraForward = Camera.current.transform.forward;
             var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;

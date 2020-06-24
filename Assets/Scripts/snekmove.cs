@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
 public class snekmove : MonoBehaviour
 {
 
+  //  private GameObject OnscreenSnekControls;
+
     public List <GameObject> snekparts;
     public float snekspeed = 10f;
     float snektimer;
@@ -21,6 +23,11 @@ public class snekmove : MonoBehaviour
 
     public bool generateSnek;
     public int startingLenght = 8;
+
+    private GameObject gameUI;
+    private SnekControls snekCTRL;
+
+
 
     //UI detection
     private bool IsPointerOverUIObject()
@@ -42,7 +49,19 @@ public class snekmove : MonoBehaviour
     {
         float snektimer = snekScale / snekspeed;
         generateSnek = true;
+        gameUI = GameObject.Find("Game UI");
+
+        snekCTRL = gameUI.GetComponent<SnekControls>();
+        snekCTRL.initFromSnek(this);
     }
+
+    public bool r_turn;
+    public bool l_turn;
+
+    //private void EnableControls()
+    //{
+    //    SnekManager.Instance.ShowControls();
+    //}
 
     private void snakeInit()
     {
@@ -62,9 +81,30 @@ public class snekmove : MonoBehaviour
             snakeInit();
             }
 
-        SnekMove();
+        debug_snekMove();
         SnekBase();
+        if (l_turn)
+            gameObject.transform.Rotate(0f, -2f, 0f, Space.World);
+        if (r_turn)
+            gameObject.transform.Rotate(0f, 2f, 0f, Space.World);
+
+
     }
+
+    public void Left_turn()
+    {
+      if(l_turn)
+            gameObject.transform.Rotate(0f, -2f, 0f, Space.World);
+
+    }
+
+    public void Right_turn()
+    {
+       if(r_turn)
+            gameObject.transform.Rotate(0f, 2f, 0f, Space.World);
+
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown("space"))
@@ -110,7 +150,7 @@ public class snekmove : MonoBehaviour
             snektimer = snekScale / snekspeed;
         }
     }
-    public void SnekMove()
+    public void debug_snekMove()
     {
         gameObject.transform.Translate(transform.forward * snekspeed * Time.fixedDeltaTime, Space.World);
 

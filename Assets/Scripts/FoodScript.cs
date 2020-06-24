@@ -25,7 +25,7 @@ public class FoodScript : MonoBehaviour
         alreadyCollected = true;
 
             sm.AddSnekPart();
-            FoodSpawnScript.Instance.InstantiateFood();
+            SnekManager.Instance.InstantiateFood();
             Destroy(gameObject);
         }
     }
