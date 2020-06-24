@@ -12,7 +12,7 @@ public class SnekManager : MonoBehaviour
     public SnekControls snekCTRL;
     public GameObject snekHed;
     public GameObject Foood;
-    public int score;
+    public int score = 0;
 
     private snekmove sm;
 

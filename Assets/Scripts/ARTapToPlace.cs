@@ -91,7 +91,7 @@ public class ARTapToPlace : MonoBehaviour
         //    plane.gameObject.SetActive(false);
         //}
 
-        SnekManager.Instance.InstantiateFood();
+      //  SnekManager.Instance.InstantiateFood();
         SnekManager.Instance.ShowControls();
     }
 

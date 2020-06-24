@@ -189,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snekparts: []
   snekspeed: 0.5
+  turnPower: 6
   skipRemove: 0
   snekpartPrefab: {fileID: 3890598966463959692, guid: e2f966251ebc240d89f18e9774370146, type: 3}
   snekScale: 0.1

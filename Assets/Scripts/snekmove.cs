@@ -13,6 +13,7 @@ public class snekmove : MonoBehaviour
 
     public List <GameObject> snekparts;
     public float snekspeed = 10f;
+    public float turnPower = 2f;
     float snektimer;
 
     //snek add part stuff
@@ -53,6 +54,9 @@ public class snekmove : MonoBehaviour
 
         snekCTRL = gameUI.GetComponent<SnekControls>();
         snekCTRL.initFromSnek(this);
+
+        SnekManager.Instance.InstantiateFood();
+
     }
 
     public bool r_turn;
@@ -84,9 +88,9 @@ public class snekmove : MonoBehaviour
         debug_snekMove();
         SnekBase();
         if (l_turn)
-            gameObject.transform.Rotate(0f, -2f, 0f, Space.World);
+            gameObject.transform.Rotate(0f, -turnPower, 0f, Space.World);
         if (r_turn)
-            gameObject.transform.Rotate(0f, 2f, 0f, Space.World);
+            gameObject.transform.Rotate(0f, turnPower, 0f, Space.World);
 
 
     }
