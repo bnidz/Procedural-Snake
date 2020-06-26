@@ -192,8 +192,8 @@ MonoBehaviour:
   turnPower: 6
   skipRemove: 0
   snekpartPrefab: {fileID: 3890598966463959692, guid: e2f966251ebc240d89f18e9774370146, type: 3}
-  snekScale: 0.1
+  snekScale: 0.05
   generateSnek: 0
-  startingLenght: 5
+  startingLenght: 15
   r_turn: 0
   l_turn: 0

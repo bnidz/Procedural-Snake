@@ -80,18 +80,20 @@ public class ARTapToPlace : MonoBehaviour
         GameObject snape = Instantiate(SnekHead, placementIndicator.transform.position, placementIndicator.transform.rotation);
         SnekManager.Instance.snekHed = snape;
 
-      //  copyPlane = GameObject.Find(planeName);
-      //  Instantiate(copyPlane, new Vector3(copyPlane.transform.position.x, copyPlane.transform.position.y -2f, copyPlane.transform.position.x), placementIndicator.transform.rotation);
+        //copyPlane = GameObject.Find(planeName);
+        //Instantiate(copyPlane, new Vector3(copyPlane.transform.position.x, copyPlane.transform.position.y -2f, copyPlane.transform.position.x), placementIndicator.transform.rotation);
         //init right snake to UI controls
-        //  snekCTRL.sm = snape.GetComponent<snekmove>();
+        //snekCTRL.sm = snape.GetComponent<snekmove>();
+
         snape.SetActive(true);
+        Time.timeScale = 1;
 
         //foreach (var plane in planeManager.trackables)
         //{
         //    plane.gameObject.SetActive(false);
         //}
 
-      //  SnekManager.Instance.InstantiateFood();
+        //SnekManager.Instance.InstantiateFood();
         SnekManager.Instance.ShowControls();
     }
 

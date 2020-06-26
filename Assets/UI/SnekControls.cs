@@ -75,18 +75,20 @@ public class SnekControls : MonoBehaviour
     {
         GameOverScreen.SetActive(true);
         HideButtons();
-        scoreText.text = "Your Score: " + SnekManager.Instance.score;
+      //  scoreText.text = "Your Score: " + SnekManager.Instance.score;
 
     }
     public void Hide_GameOverScreen()
     {
-        GameOverScreen.SetActive(false);
+        HideButtons();
+        GameOverScreen.SetActive(true);
     }
 
     public void NewGameButton()
     {
         Hide_GameOverScreen();
         ShowButtons();
+        Time.timeScale = 1;
         SnekManager.Instance.score = 0;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

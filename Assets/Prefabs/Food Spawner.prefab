@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88bcf4cb66c664ca58c80f241f5f94e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snekHed: {fileID: 0}
-  Foood: {fileID: 0}
+  snekCTRL: {fileID: 0}
+  snekHed: {fileID: 8053295045310202401, guid: 6e50aeac763d7438a99677d2036ba937, type: 3}
+  Foood: {fileID: 2749858582141410415, guid: cd06f6e041a5241dcba56a1639155e3d, type: 3}
   score: 0

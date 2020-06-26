@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TailScript : MonoBehaviour
 {
-    private bool alreadyCollided;
+    private bool alreadyCollided = false;
+    private GameObject gameUI;
     private SnekControls sc;
 
     private void Start()
     {
-        sc = FindObjectOfType<SnekControls>();
+        gameUI = GameObject.Find("Game UI");
+        sc = gameUI.GetComponent<SnekControls>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,9 +22,10 @@ public class TailScript : MonoBehaviour
             if (alreadyCollided)
                 return;
                 alreadyCollided = true;
+            //  Time.timeScale = 0;
+            other.gameObject.SetActive(false);
             sc.Show_GameOverScreen();
 
-            Time.timeScale = 0;
 
         }
     }

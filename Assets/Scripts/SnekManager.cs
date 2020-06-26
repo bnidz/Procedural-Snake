@@ -25,13 +25,13 @@ public class SnekManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
         sm = snekHed.GetComponent<snekmove>();
-       // GameUI = GameObject.Find("Game UI");
+        //GameUI = GameObject.Find("Game UI");
     }
 
     private void Start()
     {
      HideControls();
-        //InstantiateFood();
+     //InstantiateFood();
       
     }
 
@@ -39,8 +39,8 @@ public class SnekManager : MonoBehaviour
     {
         score++;
         GameObject foodObu = Instantiate(Foood, new Vector3(snekHed.transform.position.x + Random.Range(1,10),
-            snekHed.transform.position.y, snekHed.transform.position.z + Random.Range(1, 10)), gameObject.transform.rotation);
-       // ShowControls();
+        snekHed.transform.position.y, snekHed.transform.position.z + Random.Range(1, 10)), gameObject.transform.rotation);
+        // ShowControls();
     }
 
     public void HideControls()
